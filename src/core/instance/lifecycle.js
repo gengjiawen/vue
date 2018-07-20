@@ -22,12 +22,15 @@ export let activeInstance: any = null
 export let isUpdatingChildComponent: boolean = false
 
 export function initLifecycle (vm: Component) {
+  console.log('initLifecycle', vm)
   const options = vm.$options
 
   // locate first non-abstract parent
   let parent = options.parent
+  console.log('p1', parent, options)
   if (parent && !options.abstract) {
     while (parent.$options.abstract && parent.$parent) {
+      console.log('p2', parent)
       parent = parent.$parent
     }
     parent.$children.push(vm)

@@ -70,12 +70,15 @@ export function mergeDataOrFn (
   childVal: any,
   vm?: Component
 ): ?Function {
+  console.log(arguments)
   if (!vm) {
+    console.warn('traditional')
     // in a Vue.extend merge, both should be functions
     if (!childVal) {
       return parentVal
     }
     if (!parentVal) {
+      console.log('return child')
       return childVal
     }
     // when parentVal & childVal are both present,
@@ -90,6 +93,7 @@ export function mergeDataOrFn (
       )
     }
   } else {
+    console.warn('mergedInstanceDataFn')
     return function mergedInstanceDataFn () {
       // instance merge
       const instanceData = typeof childVal === 'function'

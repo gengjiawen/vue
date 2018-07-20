@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Vue.js markdown editor example</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/marked@0.3.6"></script>
+    <script src="https://unpkg.com/lodash@4.16.0"></script>
+    <!-- Delete ".min" for console warnings in development -->
+    <script src="../../dist/vue.js"></script>
+  </head>
+  <body>
+
+    <div id="app">
+    </div>
+
+    <script>
+      const SubChild = {
+        template: '<div>sub-child has a: {{a}}</div>',
+        created() {
+          // 这里将输出 parent
+          console.log('subchild')
+        },
+        data() {
+          return {
+            a: 0
+          }
+        },
+        computed: {
+          // get only
+          aDouble: function () {
+            return this.a * 2
+          }
+        },
+        methods: {
+          plus: function () {
+            this.a++
+          }
+        }
+      }
+      const Child = {
+        template: '<span>{{childData}}<sub-child></sub-child></span>',
+        data(vm) {
+          console.log(vm)
+          return {
+            childData: this.parentData
+          }
+        },
+        components: {
+          SubChild
+        },
+        props: ['parentData'],
+        created() {
+          // 这里将输出 parent
+          console.log(this.childData)
+        }
+      }
+
+      var vm = new Vue({
+        el: '#app',
+        data: {b: 3},
+        // 通过 props 向子组件传递数据
+        template: '<child parent-data="parent" />',
+        components: {
+          Child
+        }
+      })
+    </script>
+
+  </body>
+</html>
